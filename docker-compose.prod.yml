@@ -1,6 +1,22 @@
 version: '3.9'
 
 services:
+  register-db:
+    image: mongo:5.0.7
+    container_name: register-db
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo --quiet | grep 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE
+    ports:
+      - 27017:27017
+    networks:
+      - main-network
+
   focus-list-rabbit:
     image: rabbitmq:3-management
     container_name: focus-list-rabbit
@@ -34,27 +50,14 @@ services:
     depends_on:
       focus-list-rabbit:
         condition: service_healthy
+      register-db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mongodb://register-db:27017/focus-list
+      - RABBIT_MQ_URI=amqp://guest:guest@focus-list-rabbit:5672/
+      - PORT_API=3003
     ports:
       - 3003:3003
-    networks:
-      - main-network
-
-  login-api:
-    container_name: login-api
-    build: 
-      context: apps/login
-      dockerfile: Dockerfile.prod
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3004"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    depends_on:
-      focus-list-rabbit:
-        condition: service_healthy
-    ports:
-      - 3004:3004
     networks:
       - main-network
 
