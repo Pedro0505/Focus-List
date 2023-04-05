@@ -4,7 +4,9 @@ import { RegisterModule } from './shared/register.module';
 async function bootstrap() {
   const app = await NestFactory.create(RegisterModule);
 
-  await app.listen(3003);
+  const PORT = process.env.PORT_API;
+
+  await app.listen(PORT);
 }
 
 bootstrap();
