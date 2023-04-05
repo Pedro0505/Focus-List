@@ -54,6 +54,7 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=mongodb://register-db:27017/focus-list
+      - RABBIT_MQ_URI=amqp://guest:guest@focus-list-rabbit:5672/
     ports:
       - 3003:3003
     networks:
