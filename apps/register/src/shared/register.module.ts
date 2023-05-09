@@ -6,6 +6,7 @@ import { RmqModule } from '../infra/rabbitmq/rmq.module';
 import { RegisterController } from './controller/register.controller';
 import { RegisterRepository } from './repository/register.repository';
 import { RegisterService } from './service/register.service';
+import { Cryptography } from './utils/Cryptography';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { RegisterService } from './service/register.service';
     ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [RegisterController],
-  providers: [RegisterService, RegisterRepository],
+  providers: [RegisterService, RegisterRepository, Cryptography],
 })
 export class RegisterModule {}
