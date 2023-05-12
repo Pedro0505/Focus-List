@@ -1,22 +1,12 @@
 export default class User {
-  private _id: string;
   private _name: string;
   private _email: string;
   private _password: string;
 
-  constructor(id: string, name: string, password: string, email: string) {
-    this._id = id;
+  constructor(name: string, email: string, password: string) {
     this._name = name;
     this._email = email;
     this._password = password;
-  }
-
-  public get getId(): string {
-    return this._id;
-  }
-
-  public set setId(id: string) {
-    this._id = id;
   }
 
   public get getName(): string {
@@ -41,5 +31,13 @@ export default class User {
 
   public set setPassword(password: string) {
     this._password = password;
+  }
+
+  public toObject() {
+    return {
+      name: this._name,
+      email: this._email,
+      password: this._password,
+    };
   }
 }

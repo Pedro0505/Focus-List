@@ -10,6 +10,6 @@ export class RegisterRepository {
   constructor(@InjectModel(REGISTER) private registerModel: Model<Register>) {}
 
   public async insertUser(user: User) {
-    return this.registerModel.create(user);
+    return this.registerModel.create(user.toObject());
   }
 }
