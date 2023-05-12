@@ -9,7 +9,7 @@ export class RegisterController {
 
   @Post()
   public async addUser(@Body() user: IUser) {
-    const newUser = new User(user.name, user.password, user.password);
+    const newUser = new User(user.name, user.email, user.password);
 
     return await this.registerService.addUser(newUser);
   }

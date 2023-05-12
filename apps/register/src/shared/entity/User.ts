@@ -3,7 +3,7 @@ export default class User {
   private _email: string;
   private _password: string;
 
-  constructor(name: string, password: string, email: string) {
+  constructor(name: string, email: string, password: string) {
     this._name = name;
     this._email = email;
     this._password = password;
